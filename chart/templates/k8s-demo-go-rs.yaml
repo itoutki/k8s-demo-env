@@ -1,20 +1,18 @@
----
-# Source: k8s-demo-go/templates/k8s-demo-go-rs.yaml
 apiVersion: apps/v1
 kind: ReplicaSet
 metadata:
   annotations:
     traffic.spinnaker.io/load-balancers: '["service k8s-demo-go-service"]'
   name: k8s-demo-go-app
-  namespace: staging
+  namespace: {{ .Values.namespace }}
 spec:
   selector:
     matchLabels:
-      version: staging-a630bb6
+      version: {{ .Values.image.tag }}
   template:
     metadata:
       labels:
-        version: staging-a630bb6
+        version: {{ .Values.image.tag }}
     spec:
       containers:
         - env:
@@ -30,7 +28,7 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: 'metadata.labels[''version'']'
-          image: "gcr.io/nttd-platformtec/k8s-demo-go:staging-a630bb6"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           name: k8s-demo
           ports:
             - containerPort: 8080
@@ -44,4 +42,3 @@ spec:
             limits:
               cpu: 100m
               memory: 128Mi
-
