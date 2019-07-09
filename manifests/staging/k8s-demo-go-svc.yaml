@@ -1,0 +1,15 @@
+---
+# Source: k8s-demo-go/templates/k8s-demo-go-svc.yaml
+kind: Service
+apiVersion: v1
+metadata:
+  name: k8s-demo-go-service
+  namespace: staging
+spec:
+  selector:
+    app: k8s-demo-go
+  ports:
+    - port: 80
+      targetPort: 8080
+      name: http
+

@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  annotations:
+    traffic.spinnaker.io/load-balancers: '["service k8s-demo-go-service"]'
+  name: k8s-demo-go-app
+  namespace: {{ .Values.namespace }}
+spec:
+  selector:
+    matchLabels:
+      version: {{ .Values.image.tag }}
+  template:
+    metadata:
+      labels:
+        version: {{ .Values.image.tag }}
+    spec:
+      containers:
+        - env:
+            - name: MY_NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+            - name: MY_POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: MY_LABEL_VERSION
+              valueFrom:
+                fieldRef:
+                  fieldPath: 'metadata.labels[''version'']'
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          name: k8s-demo
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 5
+          resources:
+            limits:
+              cpu: 100m
+              memory: 128Mi

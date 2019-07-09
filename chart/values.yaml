@@ -1,0 +1,4 @@
+namespace: staging
+image:
+  repository: gcr.io/nttd-platformtec/k8s-demo-go
+  tag: latest
