@@ -3,6 +3,7 @@ kind: ReplicaSet
 metadata:
   annotations:
     traffic.spinnaker.io/load-balancers: '["service k8s-demo-go-service"]'
+    strategy.spinnaker.io/max-version-history: '2'
   name: k8s-demo-go-app
   namespace: {{ .Values.namespace }}
 spec:
