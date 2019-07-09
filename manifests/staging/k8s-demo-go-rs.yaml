@@ -5,16 +5,17 @@ kind: ReplicaSet
 metadata:
   annotations:
     traffic.spinnaker.io/load-balancers: '["service k8s-demo-go-service"]'
+    strategy.spinnaker.io/max-version-history: '2'
   name: k8s-demo-go-app
   namespace: staging
 spec:
   selector:
     matchLabels:
-      version: staging-7c4f793
+      version: staging-6a33b3a
   template:
     metadata:
       labels:
-        version: staging-7c4f793
+        version: staging-6a33b3a
     spec:
       containers:
         - env:
@@ -30,7 +31,7 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: 'metadata.labels[''version'']'
-          image: "gcr.io/nttd-platformtec/k8s-demo-go:staging-7c4f793"
+          image: "gcr.io/nttd-platformtec/k8s-demo-go:staging-6a33b3a"
           name: k8s-demo
           ports:
             - containerPort: 8080
