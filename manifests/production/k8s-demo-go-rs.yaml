@@ -11,11 +11,11 @@ metadata:
 spec:
   selector:
     matchLabels:
-      version: staging-88dd5d5
+      version: staging-13c62fc
   template:
     metadata:
       labels:
-        version: staging-88dd5d5
+        version: staging-13c62fc
     spec:
       containers:
         - env:
@@ -31,7 +31,7 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: 'metadata.labels[''version'']'
-          image: "gcr.io/nttd-platformtec/k8s-demo-go:staging-88dd5d5"
+          image: "gcr.io/nttd-platformtec/k8s-demo-go:staging-13c62fc"
           name: k8s-demo
           ports:
             - containerPort: 8080
